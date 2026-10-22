@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102b36">
+  <meta name="description" content="瑪奇 Mobile 公會船 1～3 階段建造材料清單、需求總量、加工配方與個人進度追蹤。">
+  <title>公會船建造計畫｜瑪奇 Mobile 材料整理</title>
+  <style>
+    :root { --navy:#102b36; --navy2:#153d48; --ink:#16313a; --muted:#6d8088; --teal:#187d78; --mint:#65d8bd; --gold:#e7bb78; --canvas:#f4f6f3; --paper:#fff; --line:#dfe7e6; --soft:#ebf3f1; --orange:#ad7350; --shadow:0 16px 48px rgba(22,49,58,.065); --radius:20px; }
+    *, *::before, *::after { box-sizing:border-box }
+    html { scroll-behavior:smooth }
+    body { margin:0; color:var(--ink); background:var(--canvas); font-family:Inter,-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif; font-size:15px; -webkit-font-smoothing:antialiased; }
+    button,input { font:inherit }
+    button { cursor:pointer }
+    button:focus-visible,a:focus-visible,input:focus-visible { outline:3px solid #a4d3ce; outline-offset:3px }
+    a { color:inherit }
+    .wrap { width:min(1200px, calc(100% - 72px)); margin-inline:auto }
+    .site-header { position:relative; z-index:5; background:#102b36; border-bottom:1px solid rgba(255,255,255,.12); }
+    .header-inner { min-height:79px; display:flex; justify-content:space-between; align-items:center; gap:16px }
+    .brand { display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none }
+    .brand-symbol { width:40px; height:40px; display:grid; place-items:center; border:1px solid rgba(231,187,120,.55); border-radius:50%; color:var(--gold); transform:rotate(-16deg) }
+    .brand-title { font-weight:760; letter-spacing:.035em; font-size:16px }
+    .brand-sub { margin-top:4px; display:block; font-size:10px; color:#8fadb4; letter-spacing:.16em }
+    .header-right { display:flex; align-items:center; gap:12px }
+    .header-source { font-size:12px; text-decoration:none; color:#bacbca; border-bottom:1px solid rgba(186,203,202,.35); padding-bottom:2px }
+    .header-source:hover { color:white }
+    .small-pill { display:inline-flex; align-items:center; gap:6px; border:1px solid rgba(255,255,255,.2); color:#d8e7e3; border-radius:100px; padding:7px 10px; font-size:11px; white-space:nowrap }
+    .hero { overflow:hidden; position:relative; color:white; background:radial-gradient(ellipse at 82% 40%, #1b5961 0%, #143a46 34%, #102b36 73%); }
+    .hero::after { content:""; pointer-events:none; position:absolute; inset:0; background:repeating-linear-gradient(0deg, transparent,transparent 43px,rgba(255,255,255,.016) 44px); }
+    .hero-inner { min-height:318px; display:flex; align-items:center; position:relative; isolation:isolate; }
+    .hero-content { width:66%; padding:50px 0 54px; z-index:2 }
+    .eyebrow { color:var(--gold); font-size:11px; letter-spacing:.24em; font-weight:800; text-transform:uppercase }
+    .hero h1 { margin:18px 0 14px; font-weight:780; font-size:clamp(36px,4.7vw,58px); line-height:1.16; letter-spacing:.045em }
+    .hero p { max-width:625px; color:#bcdbd8; line-height:1.9; margin:0; font-size:14px }
+    .hero-tags { display:flex; flex-wrap:wrap; gap:9px; margin-top:25px }
+    .hero-tag { border:1px solid rgba(202,228,225,.24); background:rgba(255,255,255,.05); color:#dae8e6; padding:9px 13px; border-radius:100px; font-size:12px; backdrop-filter:blur(5px) }
+    .hero-art { position:absolute; bottom:-20px; width:50%; max-width:540px; height:auto; right:-44px; opacity:.78; z-index:1; pointer-events:none }
+    .hero-circle { position:absolute; border-radius:50%; width:470px; height:470px; border:1px solid rgba(214,241,228,.06); right:1%; top:-102px; z-index:0 }
+    .main { padding-bottom:70px; }
+    .overview { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px; margin-top:-28px; position:relative; z-index:3 }
+    .metric { background:#fff; border-radius:18px; padding:24px 22px; border:1px solid #e6edeb; box-shadow:var(--shadow) }
+    .metric-label { display:flex; align-items:center; gap:9px; font-size:12px; color:var(--muted); font-weight:650 }
+    .metric-label .dot { width:8px; height:8px; background:#76cdb8; border-radius:50% }
+    .metric-label .dot.gold {background:var(--gold)}
+    .metric-label .dot.blue {background:#8ca9c1}
+    .metric-label .dot.grey {background:#b8c8ca}
+    .metric-value { font-size:clamp(26px,3vw,38px); font-weight:780; letter-spacing:-.035em; margin-top:14px; font-variant-numeric:tabular-nums }
+    .metric-unit { font-size:12px; color:var(--muted); margin-top:4px }
+    .body-grid { display:grid; grid-template-columns:minmax(0,1fr) 265px; gap:25px; align-items:start; margin-top:32px }
+    .primary { min-width:0 }
+    .panel { background:white; border:1px solid var(--line); border-radius:var(--radius); box-shadow:0 4px 20px rgba(15,41,46,.02) }
+    .tabs { display:flex; gap:5px; border-bottom:1px solid var(--line); overflow-x:auto; padding:7px 9px 0; scrollbar-width:none }
+    .tabs::-webkit-scrollbar {display:none}
+    .tab { border:0; background:none; color:#6d7f86; white-space:nowrap; padding:17px 17px; font-size:13px; font-weight:750; border-bottom:3px solid transparent; margin-bottom:-1px }
+    .tab:hover { color:var(--teal) }
+    .tab.active { color:var(--teal); border-color:var(--teal) }
+    .content { padding:28px }
+    .section-top { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:23px }
+    h2 { font-size:25px; letter-spacing:-.02em; margin:0 0 9px; font-weight:800 }
+    .subtle { color:var(--muted); line-height:1.7; font-size:13px; margin:0 }
+    .filters { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; align-items:center; margin:22px 0; }
+    .input-wrap { display:flex; align-items:center; gap:9px; min-height:43px; flex:1; max-width:320px; border:1px solid var(--line); background:#fbfcfb; border-radius:11px; padding:0 13px; color:#758b8d }
+    .input-wrap input { width:100%; border:0; background:transparent; outline:none; color:var(--ink); font-size:13px; min-width:0 }
+    .input-wrap:focus-within { border-color:#76aea9; box-shadow:0 0 0 3px #d6efea }
+    .toggle { display:inline-flex; align-items:center; gap:9px; font-size:13px; color:var(--muted); user-select:none; cursor:pointer }
+    .toggle input { accent-color:var(--teal); width:16px; height:16px }
+    .stage-filter { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:27px }
+    .chip { padding:9px 14px; background:#f4f7f6; border:1px solid #e2eae8; border-radius:10px; color:#60767e; font-size:12px; font-weight:750 }
+    .chip:hover { background:#eaf2ef }
+    .chip.active { color:white; border-color:var(--teal); background:var(--teal) }
+    .stage-block + .stage-block { margin-top:29px }
+    .stage-head { display:flex; align-items:center; gap:13px; margin-bottom:14px }
+    .stage-index { width:38px; height:38px; border-radius:11px; flex:none; background:#e8f2ee; color:var(--teal); display:grid; place-items:center; font-size:13px; font-weight:850 }
+    .stage-head h3 { font-size:18px; margin:0 0 3px; font-weight:780 }
+    .stage-head p { font-size:11px; color:var(--muted); margin:0 }
+    .stage-progress { margin-left:auto; text-align:right; font-weight:800; font-size:14px; color:var(--teal) }
+    .builds-list { display:grid; gap:12px }
+    .build-card { border:1px solid var(--line); border-radius:15px; overflow:hidden; background:#fff }
+    .build-top { width:100%; border:0; background:#f8faf9; display:flex; align-items:center; justify-content:space-between; gap:12px; text-align:left; padding:16px 17px; color:var(--ink) }
+    .build-top:hover { background:#f3f7f5 }
+    .build-name { font-size:14px; font-weight:780 }
+    .build-meta { display:flex; align-items:center; gap:9px; white-space:nowrap; }
+    .status { display:inline-flex; font-size:10px; font-weight:800; border-radius:100px; padding:5px 8px; background:#ebf0ef; color:#7c8f93 }
+    .status.partial {background:#fff3df;color:#9a6b2d}
+    .status.done {background:#e0f6ec;color:#237b62}
+    .amount-ratio {font-variant-numeric:tabular-nums;color:#6e8087;font-size:12px;font-weight:700}
+    .chev { transition:transform .16s; color:#88a1a3; flex:none }
+    .build-card.collapsed .chev {transform:rotate(-90deg)}
+    .bar { width:100%; height:4px; background:#e2ebeb; overflow:hidden }
+    .bar span { display:block; background:linear-gradient(90deg,#369d92,#6dcdb9); width:0; height:100%; transition:width .2s ease }
+    .material-list { padding:3px 18px }
+    .build-card.collapsed .material-list { display:none }
+    .material-row {display:grid; grid-template-columns:minmax(0,1fr) 120px 126px; gap:14px; align-items:center; padding:13px 0; min-height:63px}
+    .material-row+.material-row { border-top:1px solid #edf2f0 }
+    .material-name {font-weight:660; font-size:13px; min-width:0; display:flex; align-items:center; gap:7px }
+    .mini-tag {font-size:9px; white-space:nowrap; color:#a27637; background:#fdf4e6; padding:3px 5px; border-radius:4px }
+    .material-need { font-size:13px; text-align:right; color:#61757d; font-variant-numeric:tabular-nums; white-space:nowrap }
+    .material-need strong { color:var(--ink) }
+    .paid-field { display:flex; justify-content:end; gap:7px; align-items:center }
+    .paid-field input {width:83px; text-align:right; border-radius:9px; border:1px solid #d8e5e3; background:white; color:var(--ink); padding:9px 9px; font-size:13px; font-variant-numeric:tabular-nums; outline:none }
+    .paid-field input:focus {border-color:var(--teal);box-shadow:0 0 0 3px #e4f3ef}
+    .paid-field input.complete { background:#effaf4; border-color:#b2dfcb; color:#2c8067 }
+    .paid-field .slash {font-size:11px;color:#8c9ca0}
+    .legend { font-size:11px; color:#788d91; display:flex; gap:14px; justify-content:flex-end; flex-wrap:wrap; margin-top:-4px; margin-bottom:16px }
+    .legend b {color:var(--ink)}
+    .aside { display:grid; gap:16px; position:sticky; top:20px }
+    .aside-card {padding:22px; border:1px solid var(--line); border-radius:var(--radius); background:#fff }
+    .aside-title {display:flex;align-items:center;gap:9px;font-size:14px;font-weight:780;margin:0 0 19px}
+    .aside-title .aside-icon {display:grid;place-items:center;background:#e8f3ef;border-radius:9px;color:#24817a;width:30px;height:30px}
+    .mini-stage {margin-top:16px}
+    .mini-stage-head {display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:9px}
+    .mini-stage-head strong {font-variant-numeric:tabular-nums}
+    .mini-bar {height:7px;border-radius:40px;background:#eaf0ef;overflow:hidden}
+    .mini-bar span {display:block;background:#2f9f91;height:100%;border-radius:40px;width:0;transition:width .2s}
+    .divider {height:1px;background:var(--line);margin:19px 0}
+    .side-note { color:var(--muted);font-size:12px;line-height:1.85;margin:0 }
+    .actions {display:grid;gap:9px}
+    .action-btn { border-radius:11px; padding:12px 13px; border:1px solid #d8e5e1; background:white; color:var(--ink); font-size:12px; font-weight:760; display:flex; justify-content:center; align-items:center; gap:9px }
+    .action-btn:hover {background:#eef6f2;border-color:#b7d2c9}
+    .action-btn.main {background:var(--navy);border-color:var(--navy);color:white}
+    .action-btn.main:hover {background:#214b55}
+    .action-btn.danger { color:#975b50 }
+    .notice {background:#f0f6f3; padding:15px 16px; border-radius:12px; font-size:12px; color:#52726f; line-height:1.7; border:1px solid #e0eae4 }
+    .table-scroll {overflow:auto; border:1px solid var(--line); border-radius:13px}
+    table {border-collapse:collapse; width:100%; text-align:left; font-size:12px; white-space:nowrap}
+    thead {background:#f4f8f7}
+    th {font-size:11px; color:#72858b; padding:14px 12px; font-weight:760}
+    td {padding:14px 12px;border-top:1px solid #edf1f1;color:#4b646d;font-variant-numeric:tabular-nums}
+    td:first-child {font-weight:740; color:#23424b}
+    th:not(:first-child),td:not(:first-child) {text-align:right}
+    tbody tr:hover {background:#f9fbfa}
+    .total-row {background:#edf6f2 !important}
+    .total-row td {font-weight:800;color:#166b62}
+    .table-name {display:flex;align-items:center;gap:6px}
+    .recipe-grid {display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:13px}
+    .recipe-card {border:1px solid var(--line);border-radius:14px;padding:19px;background:#fff}
+    .recipe-head {display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:12px}
+    .recipe-head h3 {font-size:16px;margin:0}
+    .recipe-type {font-size:10px;color:#63837d;background:#e7f2ee;padding:6px 8px;border-radius:7px;white-space:nowrap;font-weight:760}
+    .recipe-ingredients {background:#f8faf9;border-radius:10px;padding:12px;line-height:1.85; font-size:12px; color:#526b70; min-height:67px }
+    .recipe-ingredients b {color:#234d52;font-weight:750}
+    .recipe-output {margin-top:14px;font-size:12px;color:#6b8084;display:flex;justify-content:space-between;align-items:center}
+    .recipe-output strong {color:var(--teal);font-size:14px}
+    .recipe-note {font-size:11px;line-height:1.7;color:#839294;margin:11px 0 0}
+    .info-grid { display:grid;grid-template-columns:1fr 1fr;gap:11px }
+    .fact {background:#f7faf8; border:1px solid var(--line); padding:15px 16px;border-radius:12px; min-height:94px }
+    .fact-label {font-size:11px;color:var(--muted);margin-bottom:8px}
+    .fact-value {font-size:13px;font-weight:760;line-height:1.5}
+    .info-heading {font-size:17px;font-weight:800;margin:27px 0 13px}
+    .update-table th:not(:first-child),.update-table td:not(:first-child){text-align:left}
+    .bullet-note {line-height:1.85;color:#5a747a;font-size:13px;padding-left:20px}
+    .bullet-note li {margin:6px 0}
+    .foot {margin-top:25px;padding:27px 0 0;border-top:1px solid #dde4e2;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;color:#738a8e;font-size:12px;line-height:1.7}
+    .foot a {color:var(--teal)}
+    .empty {text-align:center;padding:55px 20px;border:1px dashed #d5e3df;border-radius:13px;color:#708890;font-size:13px;line-height:1.8}
+    .footer-ship {font-size:11px;letter-spacing:.15em;font-weight:850;color:var(--navy)}
+    .toast {position:fixed;bottom:26px;left:50%;transform:translate(-50%,25px);background:#12363d;color:white;border-radius:13px;padding:13px 20px;z-index:100;font-size:13px;box-shadow:0 8px 35px #17313c3b;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;max-width:90%;text-align:center}
+    .toast.show {opacity:1;transform:translate(-50%,0)}
+    .toplink {text-decoration:none;color:#728e91;display:flex;gap:6px;align-items:center;font-size:12px}
+    .recap {display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:21px}
+    .recap-box {background:#f5f9f7;padding:15px;border-radius:12px;border:1px solid #e6eeeb}
+    .recap-box .label {font-size:10px;color:#6c8587}
+    .recap-box .value {font-size:20px;font-weight:780;margin-top:7px;font-variant-numeric:tabular-nums}
+    .help {display:inline-flex;align-items:center;gap:7px;color:#668680;font-size:11px;margin-top:10px}
+    @media(max-width:1050px) { .body-grid {grid-template-columns:minmax(0,1fr) 240px;gap:16px} .content {padding:22px} .metric {padding:20px 16px} .metric-value {font-size:30px} .hero-art {width:52%;right:-70px} }
+    @media(max-width:830px) { .wrap {width:min(100% - 38px, 680px)} .body-grid {display:flex; flex-direction:column} .primary,.aside {width:100%} .aside {position:static;grid-template-columns:1fr 1fr;align-items:start} .overview {grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:-22px} .hero-inner {min-height:288px} .hero-content {width:75%;padding:42px 0} .hero-art {width:56%;right:-135px;opacity:.55} .metric-value{font-size:clamp(25px,4.5vw,34px)} }
+    @media(max-width:560px) { .wrap {width:calc(100% - 28px)} .site-header .header-inner {min-height:67px} .brand-title {font-size:14px} .brand-sub {font-size:9px} .brand-symbol {width:35px;height:35px} .small-pill {display:none} .header-source {font-size:11px} .hero-inner {min-height:285px} .hero-content {width:100%;padding:42px 0 50px} .hero h1 {font-size:clamp(32px,10.5vw,44px);max-width:350px;margin:14px 0} .hero p {font-size:12px;max-width:310px} .hero-art {width:83%;right:-169px;bottom:0;opacity:.25} .hero-tag {font-size:10px;padding:7px 9px} .metric {padding:17px 15px;border-radius:14px} .metric-label {font-size:11px} .metric-value {font-size:27px;margin-top:9px} .metric-unit {font-size:10px} .body-grid {margin-top:20px} .tabs {padding-left:4px} .tab {padding:14px 12px;font-size:12px} .content {padding:21px 14px} h2 {font-size:21px} .subtle {font-size:12px} .input-wrap {max-width:none;min-width:100%} .stage-filter {gap:6px} .chip {padding:9px 11px} .material-row {grid-template-columns:minmax(0,1fr) 95px;gap:6px;padding:12px 0} .material-name {grid-column:1;grid-row:1} .material-need {grid-column:1;grid-row:2;text-align:left;font-size:11px} .paid-field {grid-column:2;grid-row:1 / span 2} .paid-field input {width:65px} .material-list {padding:3px 13px} .build-top {padding:15px 13px} .build-meta {gap:6px} .amount-ratio {display:none} .recipe-grid {grid-template-columns:1fr} .info-grid {grid-template-columns:1fr 1fr} .aside {grid-template-columns:1fr} .recap {gap:6px} .recap-box {padding:11px 8px} .recap-box .value {font-size:16px} .legend {justify-content:flex-start;margin-top:0} }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none !important}}
+    @media print { body{background:white} .site-header,.hero-art,.tabs,.filters,.stage-filter,.aside,.foot,.toplink,.paid-field input,.action-btn{display:none!important} .hero{color:black;background:white} .hero p{color:black} .hero-inner{min-height:unset} .hero-content{width:100%;padding:10px 0} .hero h1{font-size:30px} .hero-tags {display:none} .overview{margin-top:0} .metric{box-shadow:none} .body-grid{display:block} .panel,.build-card{break-inside:avoid;box-shadow:none} .content{padding:0} }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <a href="#top" class="brand" aria-label="回到首頁">
+        <span class="brand-symbol" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2 15.2 8.8 22 12l-6.8 3.2L12 22l-3.2-6.8L2 12l6.8-3.2L12 2Z" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg></span>
+        <span><span class="brand-title">公會船建造計畫</span><span class="brand-sub">GUILD SHIP · MATERIAL TRACKER</span></span>
+      </a>
+      <div class="header-right"><span class="small-pill">依韓服資料整理</span><a class="header-source" href="https://moanogi.vercel.app/zh/guide/guild-ship/" target="_blank" rel="noopener noreferrer">資料來源 ↗</a></div>
+    </div>
+  </header>
+  <section class="hero" aria-label="網站介紹">
+    <div class="hero-circle"></div>
+    <div class="wrap hero-inner">
+      <div class="hero-content">
+        <div class="eyebrow">MABINOGI MOBILE · GUILD SHIP</div>
+        <h1>一起備料，<br>向大海啟航。</h1>
+        <p>將公會船的所有建造材料整理在同一處。查需求、看配方、記錄進度，讓每一份材料都有航向。</p>
+        <div class="hero-tags"><span class="hero-tag">3 個建造階段</span><span class="hero-tag">16 次建造工程</span><span class="hero-tag">48 筆材料需求</span></div>
+      </div>
+      <svg class="hero-art" viewBox="0 0 600 420" fill="none" aria-hidden="true">
+        <circle cx="336" cy="198" r="170" stroke="#8BC1B8" stroke-opacity=".19"/><circle cx="336" cy="198" r="137" stroke="#8BC1B8" stroke-opacity=".17" stroke-dasharray="4 11"/>
+        <path d="M335 12v370M151 198h369M215 78l244 241M457 75 213 323" stroke="#8BC1B8" stroke-opacity=".12" stroke-width="1.5"/>
+        <path d="m338 12 10 21-10-5-10 5 10-21Z" fill="#E7BB78" fill-opacity=".68"/>
+        <path d="M94 311c93 20 229 20 420 0-17 48-58 68-93 75H207c-51-18-88-40-113-75Z" fill="#3C7778" stroke="#C9E3C8" stroke-width="2"/>
+        <path d="M124 319c112 14 226 14 362-1" stroke="#AED4C7" stroke-opacity=".7" stroke-width="2"/>
+        <path d="M300 74v230M427 123v180" stroke="#DFEACD" stroke-width="5" stroke-linecap="round"/>
+        <path d="M291 91 142 274l149-14V91Z" fill="#B3DDCA" fill-opacity=".55" stroke="#D9EEDB" stroke-width="1.5"/>
+        <path d="m314 93 105 181-105-14V93Z" fill="#E8D2A5" fill-opacity=".6" stroke="#F4DBA4" stroke-width="1.5"/>
+        <path d="m434 137 70 138-70-10V137Z" fill="#95CBBE" fill-opacity=".48" stroke="#CCE5D2" stroke-width="1.5"/>
+        <path d="M107 299c121 16 255 16 413-3" stroke="#E2C08C" stroke-width="5"/><path d="M136 296v-24h34v27m217 0v-33h67v31" stroke="#D8E4CA" stroke-width="2.5"/>
+        <path d="M55 388c61-15 112-17 163-2 64 18 121 11 175-3 49-13 102-14 161 5M78 402c63-11 104-11 162 0 55 11 121 11 178-3 44-10 88-11 133-2" stroke="#8FD3BD" stroke-opacity=".47" stroke-width="3"/>
+        <path d="M366 68c-5-5-11-5-17 0m26 2c6-6 14-7 22-3" stroke="#E5D9AD" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </section>
+  <main class="main wrap">
+    <section class="overview" aria-label="材料總覽">
+      <div class="metric"><div class="metric-label"><span class="dot"></span>整體完成率</div><div class="metric-value" id="metric-percent">0%</div><div class="metric-unit">依已繳交數量計算</div></div>
+      <div class="metric"><div class="metric-label"><span class="dot gold"></span>所需材料</div><div class="metric-value" id="metric-needed">42,340</div><div class="metric-unit">全部 3 階段總計</div></div>
+      <div class="metric"><div class="metric-label"><span class="dot blue"></span>已繳交</div><div class="metric-value" id="metric-paid">0</div><div class="metric-unit">本裝置記錄的進度</div></div>
+      <div class="metric"><div class="metric-label"><span class="dot grey"></span>尚需材料</div><div class="metric-value" id="metric-left">42,340</div><div class="metric-unit">剩餘需求總數</div></div>
+    </section>
+    <div class="body-grid">
+      <section class="primary panel" aria-label="材料工具">
+        <nav class="tabs" role="tablist" aria-label="內容分類">
+          <button type="button" class="tab active" role="tab" aria-selected="true" data-tab="builds">建造清單</button>
+          <button type="button" class="tab" role="tab" aria-selected="false" data-tab="totals">材料總覽</button>
+          <button type="button" class="tab" role="tab" aria-selected="false" data-tab="recipes">加工配方</button>
+          <button type="button" class="tab" role="tab" aria-selected="false" data-tab="info">建造須知</button>
+        </nav>
+        <div class="content" id="content" role="tabpanel" aria-live="polite"></div>
+      </section>
+      <aside class="aside" aria-label="進度與操作">
+        <div class="aside-card">
+          <h3 class="aside-title"><span class="aside-icon" aria-hidden="true">≋</span> 階段完成進度</h3>
+          <div id="stage-mini"></div>
+          <div class="divider"></div>
+          <p class="side-note" id="builds-complete">已完成 0 / 16 次建造工程。</p>
+        </div>
+        <div class="aside-card">
+          <h3 class="aside-title"><span class="aside-icon" aria-hidden="true">↗</span> 進度管理</h3>
+          <div class="actions">
+            <button id="share-progress" class="action-btn main" type="button">⌁　複製進度分享連結</button>
+            <button id="export-csv" class="action-btn" type="button">⇩　匯出目前進度 CSV</button>
+            <button id="export-json" class="action-btn" type="button">⇩　下載進度備份</button>
+            <button id="import-json" class="action-btn" type="button">⇧　載入進度備份</button>
+            <input id="upload-json" type="file" accept=".json,application/json" hidden>
+            <button id="reset-progress" class="action-btn danger" type="button">↺　清除本裝置進度</button>
+          </div>
+          <div class="divider"></div>
+          <p class="side-note">進度會自動儲存在目前瀏覽器。分享連結可傳遞「當下的進度快照」，但不同成員的修改<strong>不會即時同步</strong>。</p>
+        </div>
+        <div class="notice">航海提醒：加工材料的製作原料，不包含在上方 42,340 個建造需求總數中。請另外預留加工耗材。</div>
+      </aside>
+    </div>
+    <footer class="foot">
+      <div><div class="footer-ship">GUILD SHIP · THE BUILD JOURNAL</div><div>非官方整理工具。資料參考 <a href="https://moanogi.vercel.app/zh/guide/guild-ship/" target="_blank" rel="noopener noreferrer">摩亞奇公會船指南</a>；遊戲內最新顯示為準。</div></div>
+      <a class="toplink" href="#top">返回頂部 ↑</a>
+    </footer>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+  (() => {
+    'use strict';
+    const STAGES = [
+      {name:'第 1 階段船艦', builds:[
+        [['木材+',1000],['上級木材',1000],['焦油',200]],
+        [['鋼錠',1500],['木材+',2000],['膠水',250]],
+        [['木材+',300],['厚布',400],['繩索',300]]
+      ]},
+      {name:'第 2 階段船艦', builds:[
+        [['合金鋼錠',900],['焦油',1000],['木材+',3000]],
+        [['合金鋼錠',1080],['上級木材',1080],['膠水',1000]],
+        [['硬木材',420],['厚布',800],['繩索',500]],
+        [['魔力起爆劑',500],['焦油',1000],['強韌蘑菇精華',3000]]
+      ]},
+      {name:'第 3 階段船艦', builds:[
+        [['木材+',1500],['上級木材+',600],['焦油',500]],
+        [['木材+',1200],['軟木材',420],['繩索',390]],
+        [['焦油',560],['特殊鋼錠',300],['軟木材',300]],
+        [['鋼錠',1500],['木材+',1000],['膠水',700]],
+        [['特殊鋼錠',240],['上級木材+',600],['膠水',700]],
+        [['上級木材+',300],['魔力起爆劑',500],['強韌蘑菇精華',2250]],
+        [['特殊鋼錠',300],['上級木材+',600],['焦油',600]],
+        [['硬木材',300],['厚布',800],['堅固繩索',500]],
+        [['特殊鋼錠',450],['鋼錠',1000],['潔淨蘑菇精華',3000]]
+      ]}
+    ];
+    const RECIPES = [
+      {name:'焦油',type:'金屬加工',materials:[['原木','50'],['黏土','25']],out:5,note:'全部建造工程合計需 3,860 個。'},
+      {name:'膠水',type:'藥品加工',materials:[['上級生皮','30'],['裝水的瓶子','10']],out:5,note:'建議提早收集上級生皮。'},
+      {name:'繩索',type:'布料加工',materials:[['植物纖維','45'],['蜂蠟','4']],out:3,note:'蜂蠟每週有購買上限。'},
+      {name:'堅固繩索',type:'布料加工',materials:[['繩索','6'],['植物纖維','90'],['蜂蠟','8'],['焦油','3']],out:3,note:'第 3 階段第 8 次建造需要 500 個。'},
+      {name:'厚布',type:'布料加工',materials:[['厚羊毛','原網站未標示數量'],['上級羊毛','100'],['蜂蠟','2']],out:3,note:'厚羊毛的數量原網站未列出，不自行推算。'},
+      {name:'硬木材',type:'木材加工',materials:[['上級木材+','15'],['硬原木','30'],['樹液','30']],out:3,note:'硬原木採集耗時。'}
+    ];
+    const PROCESS_NAMES = new Set(['焦油','膠水','繩索','堅固繩索','厚布','硬木材','強韌蘑菇精華','潔淨蘑菇精華']);
+    const flat = [];
+    STAGES.forEach((stage,s) => stage.builds.forEach((items,b) => items.forEach(([name,need],m) => flat.push({id:`${s}-${b}-${m}`,s,b,m,name,need}))));
+    const ids = flat.map(e=>e.id);
+    const fmt=n=>Number(n).toLocaleString('en-US');
+    const totalNeed=flat.reduce((n,e)=>n+e.need,0);
+    const clamped=(n, max) => Math.max(0, Math.min(max,Math.trunc(Number(n)||0)));
+    const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const KEY='mabinogi_guild_ship_progress_v1';
+    const saved=()=>{try {return JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch{return {}}};
+    let progress=saved();
+    let tab='builds';
+    let stageFilter='all';
+    let query='';
+    let incompleteOnly=false;
+    let processedOnly=false;
+    const collapsed=new Set();
+    let toastTimer;
+    function notify(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3200)}
+    function totalPaid(){return flat.reduce((sum,e)=>sum+getPaid(e),0)}
+    function getPaid(entry){return clamped(progress[entry.id]||0,entry.need)}
+    function save(){try{localStorage.setItem(KEY,JSON.stringify(progress))}catch{notify('瀏覽器無法儲存進度，請改用「下載進度備份」。')}}
+    function getStats(entries){let need=0,paid=0;for (const e of entries){need+=e.need;paid+=getPaid(e)}return {need,paid,pct:need?paid/need*100:0}}
+    function stageEntries(s){return flat.filter(e=>e.s===s)}
+    function buildEntries(s,b){return flat.filter(e=>e.s===s&&e.b===b)}
+    function sumState(){return STAGES.map((_,s)=>getStats(stageEntries(s)))}
+    function importedFromHash(){
+      if (!location.hash.startsWith('#p='))return;
+      try {
+        const val=decodeURIComponent(location.hash.slice(3)).replace(/-/g,'+').replace(/_/g,'/');
+        const decoded=atob(val).split('.');
+        if(decoded.length!==flat.length)return;
+        if(!decoded.every(x=>/^\d+$/.test(x)))return;
+        const next={};
+        flat.forEach((e,i)=>{const paid=clamped(decoded[i],e.need);if(paid)next[e.id]=paid});
+        progress=next;save();
+        setTimeout(()=>notify('已載入分享連結中的進度快照'),250);
+      } catch(e) { /* Ignore invalid shared snapshot. */ }
+    }
+    importedFromHash();
+    function renderGlobal(){
+      const paid=totalPaid();
+      document.getElementById('metric-percent').textContent=(paid/totalNeed*100).toFixed(1)+'%';
+      document.getElementById('metric-needed').textContent=fmt(totalNeed);
+      document.getElementById('metric-paid').textContent=fmt(paid);
+      document.getElementById('metric-left').textContent=fmt(totalNeed-paid);
+      document.getElementById('stage-mini').innerHTML=sumState().map((x,i)=>`<div class="mini-stage"><div class="mini-stage-head"><span>第 ${i+1} 階段</span><strong>${x.pct.toFixed(1)}%</strong></div><div class="mini-bar"><span style="width:${x.pct}%"></span></div></div>`).join('');
+      const done=STAGES.reduce((n,st,s)=>n+st.builds.filter((_,b)=>{const x=getStats(buildEntries(s,b));return x.paid===x.need}).length,0);
+      document.getElementById('builds-complete').textContent=`已完成 ${done} / 16 次建造工程。`;
+    }
+    const content=document.getElementById('content');
+    function setTab(to){
+      tab=to;document.querySelectorAll('.tab').forEach(btn=>{
+        const active=btn.dataset.tab===to;btn.classList.toggle('active',active);btn.setAttribute('aria-selected',active?'true':'false');
+      });renderContent();
+    }
+    function renderContent(){
+      if(tab==='builds') renderBuilds();
+      else if(tab==='totals')renderTotals();
+      else if(tab==='recipes')renderRecipes();
+      else renderInfo();
+    }
+    function buildCard(s,b,items){
+      const entries=buildEntries(s,b),x=getStats(entries),done=x.paid===x.need,partial=x.paid>0;
+      const state=done?'已完成':partial?'進行中':'尚未開始';
+      const statusClass=done?'done':partial?'partial':'';
+      const key=`${s}-${b}`;
+      const isCollapsed=collapsed.has(key);
+      return `<article class="build-card ${isCollapsed?'collapsed':''}">
+      <button type="button" class="build-top" data-toggle="${key}" aria-expanded="${!isCollapsed}">
+        <span class="build-name">第 ${b+1} 次建造</span>
+        <span class="build-meta"><span class="status ${statusClass}">${state}</span><span class="amount-ratio">${fmt(x.paid)} / ${fmt(x.need)}</span><span class="chev" aria-hidden="true">⌄</span></span>
+      </button><div class="bar"><span style="width:${x.pct}%"></span></div><div class="material-list">
+      ${entries.map(e=>{const paid=getPaid(e);return `<div class="material-row"><div class="material-name">${safe(e.name)} ${PROCESS_NAMES.has(e.name)?'<span class="mini-tag">加工</span>':''}</div><div class="material-need">需求 <strong>${fmt(e.need)}</strong></div><label class="paid-field"><span class="slash">已繳</span><input data-entry="${e.id}" type="number" inputmode="numeric" min="0" max="${e.need}" step="1" value="${paid}" class="${paid===e.need?'complete':''}" aria-label="第${s+1}階段第${b+1}次建造 ${safe(e.name)} 已繳交數量"></label></div>`}).join('')}
+      </div></article>`;
+    }
+    function renderBuilds(){
+      const q=query.trim().toLowerCase();
+      content.innerHTML=`<div class="section-top"><div><h2>建造材料清單</h2><p class="subtle">每個材料右側可輸入已繳交數量，進度會自動保存在此瀏覽器。</p></div></div>
+      <div class="filters"><label class="input-wrap"><span aria-hidden="true">⌕</span><input id="search-builds" type="search" placeholder="搜尋材料名稱或工程…" value="${safe(query)}" aria-label="搜尋建造材料"></label><label class="toggle"><input id="incomplete-only" type="checkbox" ${incompleteOnly?'checked':''}> 只看未完成工程</label></div>
+      <div class="stage-filter" role="group" aria-label="階段篩選">${[['all','全部階段'],['0','第一階段'],['1','第二階段'],['2','第三階段']].map(([v,t])=>`<button type="button" class="chip ${stageFilter===v?'active':''}" data-stage="${v}">${t}</button>`).join('')}</div>
+      <div class="legend"><span>建造需求：<b>${fmt(totalNeed)}</b></span><span>輸入欄位：<b>已繳交數量</b></span></div>
+      <div id="builds-result">${STAGES.map((stage,s)=>{
+        if(stageFilter!=='all' && Number(stageFilter)!==s)return '';
+        const x=getStats(stageEntries(s));
+        const cards=stage.builds.map((items,b)=>{
+          const entries=buildEntries(s,b),y=getStats(entries);
+          if(incompleteOnly&&y.paid===y.need)return '';
+          const match=!q||stage.name.toLowerCase().includes(q)||(`第 ${b+1} 次建造`).includes(q)||(`第${b+1}次`).includes(q)||items.some(([name])=>name.toLowerCase().includes(q));
+          return match?buildCard(s,b,items):'';
+        }).filter(Boolean).join('');
+        if(!cards)return '';
+        return `<section class="stage-block"><div class="stage-head"><span class="stage-index">0${s+1}</span><div><h3>${stage.name}</h3><p>${stage.builds.length} 次建造 · 共 ${fmt(x.need)} 個材料</p></div><span class="stage-progress">${x.pct.toFixed(1)}%</span></div><div class="builds-list">${cards}</div></section>`;
+      }).join('')||'<div class="empty">找不到符合條件的工程。<br>可以試著更換搜尋字詞或關閉篩選。</div>'}</div>`;
+    }
+    function inventory(){
+      const dict=new Map();
+      for (const e of flat){
+        if(!dict.has(e.name))dict.set(e.name,{name:e.name,stages:[0,0,0],need:0,paid:0});
+        const x=dict.get(e.name);x.stages[e.s]+=e.need;x.need+=e.need;x.paid+=getPaid(e);
+      }
+      return [...dict.values()].sort((a,b)=>b.need-a.need);
+    }
+    function renderTotals(){
+      const rows=inventory().filter(r=>(!processedOnly||PROCESS_NAMES.has(r.name))&&r.name.toLowerCase().includes(query.trim().toLowerCase()));
+      const sum=rows.reduce((a,r)=>{r.stages.forEach((v,i)=>a.stages[i]+=v);a.need+=r.need;a.paid+=r.paid;return a},{stages:[0,0,0],need:0,paid:0});
+      content.innerHTML=`<div class="section-top"><div><h2>材料需求總覽</h2><p class="subtle">將相同材料跨階段合併，方便一眼掌握採集與加工數量。</p></div></div>
+      <div class="recap"><div class="recap-box"><div class="label">材料種類</div><div class="value">${rows.length} 種</div></div><div class="recap-box"><div class="label">目前所需</div><div class="value">${fmt(sum.need)}</div></div><div class="recap-box"><div class="label">尚未繳交</div><div class="value">${fmt(sum.need-sum.paid)}</div></div></div>
+      <div class="filters"><label class="input-wrap"><span aria-hidden="true">⌕</span><input type="search" id="search-totals" placeholder="搜尋材料名稱…" value="${safe(query)}" aria-label="搜尋材料總量"></label><label class="toggle"><input type="checkbox" id="processed-only" ${processedOnly?'checked':''}> 只看加工材料</label></div>
+      <div class="table-scroll"><table><thead><tr><th>材料名稱</th><th>第一階</th><th>第二階</th><th>第三階</th><th>需求總數</th><th>已繳交</th><th>尚需</th></tr></thead><tbody>${rows.map(r=>`<tr><td><span class="table-name">${safe(r.name)} ${PROCESS_NAMES.has(r.name)?'<span class="mini-tag">加工</span>':''}</span></td>${r.stages.map(n=>`<td>${n?fmt(n):'—'}</td>`).join('')}<td><strong>${fmt(r.need)}</strong></td><td>${fmt(r.paid)}</td><td><strong>${fmt(r.need-r.paid)}</strong></td></tr>`).join('')||'<tr><td colspan="7">沒有符合條件的材料。</td></tr>'}<tr class="total-row"><td>合計</td>${sum.stages.map(n=>`<td>${fmt(n)}</td>`).join('')}<td>${fmt(sum.need)}</td><td>${fmt(sum.paid)}</td><td>${fmt(sum.need-sum.paid)}</td></tr></tbody></table></div>
+      <p class="help">※ 原料加工耗材（例如蜂蠟、原木）不含在此建造需求統計內。</p>`;
+    }
+    function renderRecipes(){
+      content.innerHTML=`<div class="section-top"><div><h2>加工製作配方</h2><p class="subtle">需要提前製作的加工材料；每次製作的投入量與產出量。</p></div></div>
+      <div class="recipe-grid">${RECIPES.map(r=>`<article class="recipe-card"><div class="recipe-head"><h3>${r.name}</h3><span class="recipe-type">${r.type}</span></div><div class="recipe-ingredients">${r.materials.map(([name,n])=>`<div><b>${name}</b> × ${n}</div>`).join('')}</div><div class="recipe-output"><span>單次製作產出</span><strong>${r.out} 個 ↗</strong></div><p class="recipe-note">${r.note}</p></article>`).join('')}</div><div class="notice" style="margin-top:18px">強韌蘑菇精華、潔淨蘑菇精華同屬需加工的材料，但資料來源未提供配方。上列厚羊毛數量也未標示，請以遊戲內顯示為準。</div>`;
+    }
+    function renderInfo(){
+      content.innerHTML=`<div class="section-top"><div><h2>建造須知與更新</h2><p class="subtle">施工條件、繳交規則，以及材料調降紀錄。</p></div></div>
+      <div class="info-grid">
+      <div class="fact"><div class="fact-label">開啟條件</div><div class="fact-value">公會等級達 2 級以上</div></div>
+      <div class="fact"><div class="fact-label">建造地點</div><div class="fact-value">科爾亨造船廠</div></div>
+      <div class="fact"><div class="fact-label">材料繳交 NPC</div><div class="fact-value">貓咪船員</div></div>
+      <div class="fact"><div class="fact-label">搭乘公會船 NPC</div><div class="fact-value">貓咪船長</div></div>
+      <div class="fact"><div class="fact-label">乘船條件</div><div class="fact-value">加入公會，且船艦達第 1 階段</div></div>
+      <div class="fact"><div class="fact-label">公會代幣領取上限</div><div class="fact-value">每人每伺服器 30,000 個</div></div>
+      </div>
+      <h3 class="info-heading">2025 / 10 / 02 材料調降</h3>
+      <div class="table-scroll"><table class="update-table"><thead><tr><th>工程</th><th>材料</th><th>原需求</th><th>調整後</th></tr></thead><tbody>
+      <tr><td>第3階 · 第2次</td><td>木材+</td><td>5,000</td><td>1,200</td></tr>
+      <tr><td>第3階 · 第2次</td><td>繩索</td><td>1,440</td><td>390</td></tr>
+      <tr><td>第3階 · 第3次</td><td>焦油</td><td>920</td><td>560</td></tr>
+      <tr><td>第3階 · 第3次</td><td>特殊鋼錠</td><td>900</td><td>300</td></tr>
+      <tr><td>第3階 · 第3次</td><td>軟木材</td><td>600</td><td>300</td></tr>
+      </tbody></table></div>
+      <h3 class="info-heading">開始使用前</h3><ul class="bullet-note"><li>上方需求與進度，均以 <b>2025 / 10 / 02 調整後</b>的數量計算。</li><li>已正式繳交的材料不能退還，請先核對每項數量。</li><li>原始攻略以韓服為準，並標示截至 2026 / 09 台服、日服尚未實裝；各伺服器實際開放情況請查最新遊戲公告。</li><li>本頁進度僅儲存於目前的瀏覽器。如果要讓其他人看到你的進度，可在網站公開上線後使用「複製進度分享連結」傳送快照；多人即時同步需要額外的雲端資料庫。</li></ul>
+      <div class="notice"><b>資料來源：</b><a href="https://moanogi.vercel.app/zh/guide/guild-ship/" target="_blank" rel="noopener noreferrer">摩亞奇｜公會船繳交材料整理 ↗</a><br>內容如有遊戲改版，以遊戲內數值與官方公告為準。</div>`;
+    }
+    function refresh(){renderGlobal();renderContent()}
+    document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{query='';setTab(btn.dataset.tab)}));
+    content.addEventListener('click',e=>{
+      const stage=e.target.closest('[data-stage]');
+      if(stage){stageFilter=stage.dataset.stage;renderBuilds();return}
+      const toggle=e.target.closest('[data-toggle]');
+      if(toggle){const key=toggle.dataset.toggle;if(collapsed.has(key))collapsed.delete(key);else collapsed.add(key);const card=toggle.closest('.build-card');card.classList.toggle('collapsed');toggle.setAttribute('aria-expanded',String(!collapsed.has(key)));}
+    });
+    content.addEventListener('input',e=>{
+      if(e.target.id==='search-builds'||e.target.id==='search-totals'){
+        const target=e.target;query=target.value;
+        const start=target.selectionStart;
+        const isTotals=tab==='totals';
+        if(isTotals)renderTotals();else renderBuilds();
+        const replacement=document.getElementById(target.id);if(replacement){replacement.focus();replacement.setSelectionRange(start,start)}
+      }
+    });
+    content.addEventListener('change',e=>{
+      if(e.target.id==='incomplete-only'){incompleteOnly=e.target.checked;renderBuilds();return}
+      if(e.target.id==='processed-only'){processedOnly=e.target.checked;renderTotals();return}
+      const id=e.target.dataset.entry;
+      if(!id)return;
+      const entry=flat.find(x=>x.id===id);
+      if(!entry)return;
+      const value=clamped(e.target.value,entry.need);
+      if(value)progress[id]=value;else delete progress[id];
+      save();refresh();
+    });
+    function download(filename,contents,mime){const blob=new Blob([contents],{type:mime});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),800)}
+    document.getElementById('export-csv').addEventListener('click',()=>{
+      const csv=[['階段','工程','材料','需求數量','已繳交','尚需數量'],...flat.map(e=>[`第${e.s+1}階段`,`第${e.b+1}次建造`,e.name,e.need,getPaid(e),e.need-getPaid(e)])].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+      download('公會船_材料進度.csv','\ufeff'+csv,'text/csv;charset=utf-8');notify('已匯出 CSV 材料進度');
+    });
+    document.getElementById('export-json').addEventListener('click',()=>{
+      download('公會船_進度備份.json',JSON.stringify({format:'guild-ship-v1',date:new Date().toISOString(),progress},null,2),'application/json;charset=utf-8');notify('已下載進度備份');
+    });
+    document.getElementById('import-json').addEventListener('click',()=>document.getElementById('upload-json').click());
+    document.getElementById('upload-json').addEventListener('change',async e=>{
+      const file=e.target.files?.[0];if(!file)return;
+      try {
+        const json=JSON.parse(await file.text());
+        if(json.format!=='guild-ship-v1'||!json.progress||typeof json.progress!=='object')throw Error('bad format');
+        const next={};for(const entry of flat){const num=clamped(json.progress[entry.id]||0,entry.need);if(num)next[entry.id]=num}
+        if(!confirm('載入備份會取代目前的進度。確定繼續嗎？'))return;
+        progress=next;save();refresh();notify('進度備份載入成功');
+      }catch {notify('備份檔案格式不正確，無法載入')}finally{e.target.value=''}
+    });
+    document.getElementById('reset-progress').addEventListener('click',()=>{
+      if(!confirm('確定要清除本裝置的所有公會船繳交進度嗎？此動作無法復原。'))return;
+      progress={};save();if(location.hash.startsWith('#p='))history.replaceState(null,'',location.pathname+location.search);refresh();notify('已清除本裝置進度');
+    });
+    async function copy(text){
+      try{await navigator.clipboard.writeText(text);return true}catch{
+        const el=document.createElement('textarea');el.value=text;el.style.position='fixed';el.style.top='-9999px';document.body.appendChild(el);el.select();let okay=false;
+        try{okay=document.execCommand('copy')}catch{}el.remove();return okay;
+      }
+    }
+    document.getElementById('share-progress').addEventListener('click',async()=>{
+      if(location.protocol==='file:'){notify('請先將網站上傳取得公開網址，再複製分享連結');return}
+      const snapshot=flat.map(e=>getPaid(e)).join('.');
+      const encoded=btoa(snapshot).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+      const url=location.origin+location.pathname+location.search+'#p='+encoded;
+      const okay=await copy(url);
+      if(okay){history.replaceState(null,'',url);notify('已複製目前進度的分享連結（非即時同步）')}
+      else {prompt('複製此進度分享連結：',url)}
+    });
+    renderGlobal();renderContent();
+    if(totalNeed!==42340||flat.length!==48)notify('提醒：材料資料驗證未通過');
+  })();
+  </script>
+</body>
+</html>
